@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HOBBYTAN 리뉴얼 프리뷰</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root{
+  --bg:#000; --fg:#f4f5f7; --mute:#9aa0aa; --dim:#5d636d; --line:rgba(255,255,255,.12);
+  --card:#0b0c0f; --accent:#7ab1fe;
+  --font:"DM Sans","Pretendard Variable",Pretendard,system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--fg);font-family:var(--font);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* ---------- preview banner ---------- */
+.banner{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:100;display:flex;gap:10px;align-items:center;
+  background:rgba(20,22,28,.85);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:999px;padding:8px 8px 8px 16px;font-size:13px;color:var(--mute)}
+.banner b{color:var(--fg);font-weight:500}
+.banner a{background:#fff;color:#000;border-radius:999px;padding:6px 12px;font-weight:500}
+.progress{position:fixed;left:0;top:0;height:2px;background:var(--accent);z-index:101;width:0}
+
+/* ---------- prototype stage ---------- */
+.scene{position:relative;height:640vh}
+.stage{position:sticky;top:0;height:100vh;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.nav{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:22px clamp(16px,5.5vw,80px)}
+.logo{font-weight:500;letter-spacing:-.02em;font-size:20px;display:flex;align-items:center;gap:6px}
+.logo i{font-style:normal;font-size:11px;border:1px solid #fff;border-radius:4px;padding:1px 4px}
+.nav ul{display:flex;gap:34px;list-style:none;font-size:15px}
+.nav .r{display:flex;gap:10px;align-items:center;font-size:15px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;padding:11px 18px;font-size:15px;font-weight:500;white-space:nowrap}
+.btn.w{background:#fff;color:#000}
+.btn.d{background:#121318;border:1px solid #2a2c33}
+.btn.glow{box-shadow:0 0 40px rgba(255,255,255,.35),0 0 2px #fff;padding:16px 28px;border-radius:12px;font-size:17px}
+
+.layer{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;will-change:transform,opacity,filter}
+.layer .pe{pointer-events:auto}
+.h1{font-weight:300;font-size:clamp(40px,6vw,86px);line-height:1.05;letter-spacing:-.035em;text-shadow:0 0 30px rgba(255,255,255,.25)}
+.h2{font-weight:300;font-size:clamp(32px,4.2vw,60px);line-height:1.1;letter-spacing:-.035em}
+.grad{background:linear-gradient(90deg,#fff 0%,#c9ccd3 40%,#7d828c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;position:relative}
+.uline{position:relative;display:inline-block}
+.uline::after{content:"";position:absolute;left:0;right:-4%;bottom:-.06em;height:2px;background:linear-gradient(90deg,transparent,#fff 30%,rgba(255,255,255,.2));filter:drop-shadow(0 0 6px #fff)}
+.sub{margin-top:28px;color:#c9ccd3;font-size:clamp(15px,1.4vw,20px);letter-spacing:-.01em}
+.cta-row{margin-top:46px;position:relative}
+.cursor3d{position:absolute;left:calc(100% + 40px);top:-30px;width:78px;height:78px;animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+.tag{position:absolute;top:96px;left:50%;transform:translateX(-50%);font-size:12px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase}
+
+.words{font-weight:300;font-size:clamp(28px,3.3vw,48px);letter-spacing:-.03em;display:flex;gap:.28em}
+.words span{display:inline-block;will-change:opacity,filter,transform}
+.dot{display:inline-block;width:.32em;height:.32em;border-radius:50%;background:#fff;margin-left:.1em;box-shadow:0 0 18px #fff;align-self:center;transform:translateY(.18em)}
+
+.ask{margin-top:40px;width:min(560px,86vw);height:56px;border-radius:16px;background:rgba(14,15,19,.9);border:1px solid #23252c;display:flex;align-items:center;gap:14px;padding:0 10px 0 12px;text-align:left}
+.ask .av{width:32px;height:32px;border-radius:9px;background:linear-gradient(160deg,#cfe3ff,#7ab1fe);display:grid;place-items:center;flex:none}
+.ask .av::before{content:"··";color:#0b1a33;font-weight:700;letter-spacing:1px;font-size:14px;transform:translateY(-2px)}
+.ask .tx{flex:1;font-size:15px;color:#e8eaee}
+.ask .tx::after{content:"";display:inline-block;width:1px;height:1.1em;background:#fff;vertical-align:-.2em;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.ask .send{width:34px;height:34px;border-radius:50%;background:#22242a;display:grid;place-items:center;color:#888;transition:.3s}
+.ask .send.on{background:#fff;color:#000;box-shadow:0 0 18px rgba(255,255,255,.5)}
+
+.modes{position:absolute;inset:auto 0 0 0;padding:0 clamp(16px,5.5vw,80px) 12vh;display:flex;justify-content:space-between;align-items:flex-end;gap:40px;text-align:left}
+.modes p{max-width:420px;color:var(--mute);font-size:17px;line-height:1.6}
+
+/* ---------- storyboard ---------- */
+.doc{max-width:1240px;margin:0 auto;padding:140px clamp(16px,4vw,40px) 160px}
+.eyebrow{font-size:12px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase}
+.doc h2{font-weight:300;font-size:clamp(32px,4vw,52px);letter-spacing:-.035em;margin:14px 0 18px}
+.lead{color:var(--mute);font-size:17px;line-height:1.7;max-width:760px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:44px 0 90px}
+.facts div{background:#050506;padding:22px}
+.facts b{display:block;font-weight:400;font-size:22px;letter-spacing:-.02em;margin-bottom:6px}
+.facts span{color:var(--mute);font-size:13px;line-height:1.5}
+.sec{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:36px;padding:44px 0;border-top:1px solid var(--line)}
+.sec figure{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#050506;align-self:start}
+.sec figure img{display:block;width:100%;height:auto}
+.sec figcaption{position:absolute;left:10px;top:10px;font-size:11px;background:rgba(0,0,0,.7);border:1px solid var(--line);padding:3px 8px;border-radius:999px;color:var(--mute)}
+.sec .n{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--accent)}
+.sec h3{font-weight:400;font-size:24px;letter-spacing:-.02em;margin:6px 0 16px}
+.sec .copy{font-weight:300;font-size:26px;line-height:1.2;letter-spacing:-.03em;padding:18px 20px;border-radius:12px;background:#0a0b0e;border:1px solid var(--line);margin-bottom:16px}
+.sec .copy small{display:block;font-size:14px;color:var(--mute);margin-top:10px;letter-spacing:-.01em;line-height:1.5}
+.sec dl{display:grid;grid-template-columns:88px 1fr;gap:8px 14px;font-size:14px;line-height:1.6}
+.sec dt{color:var(--dim)}
+.sec dd{color:#c9ccd3}
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid rgba(122,177,254,.4);color:var(--accent);margin-left:6px;vertical-align:2px}
+.decide{margin-top:90px;border:1px solid rgba(122,177,254,.35);border-radius:18px;padding:30px;background:linear-gradient(180deg,rgba(122,177,254,.06),transparent)}
+.decide h3{font-weight:400;font-size:22px;margin-bottom:16px}
+.decide ol{padding-left:20px;color:#c9ccd3;line-height:1.8;font-size:15px}
+.decide li b{color:#fff;font-weight:500}
+
+@media (max-width:900px){
+  .nav ul{display:none}
+  .sec{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr 1fr}
+  .modes{flex-direction:column;align-items:flex-start}
+  .cursor3d{left:auto;right:-70px}
+}
+@media (max-width:520px){ .nav .r .d{display:none} .facts{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<div class="banner"><span><b>프리뷰</b> · 위 영역을 스크롤하면 시그니처 모션 1~4장면이 재생됩니다</span><a href="#plan">구성안 보기 ↓</a></div>
+
+<!-- =============== PROTOTYPE =============== -->
+<section class="scene" id="scene">
+  <div class="stage">
+    <canvas id="cv"></canvas>
+    <header class="nav">
+      <a class="logo" href="#">HOBBYTAN <i>AI</i></a>
+      <ul><li>서비스</li><li>업무 예시</li><li>교육 성과</li><li>진행 방식</li><li>프로그램</li></ul>
+      <div class="r"><a class="btn d" href="#">기업소개서</a><a class="btn w" href="#">상담 문의</a></div>
+    </header>
+
+    <!-- 1. hero -->
+    <div class="layer" id="L-hero">
+      <h1 class="h1">기업의 AI 전환을 설계하고,<br>현장에서 <span class="grad uline">완성합니다</span>.</h1>
+      <p class="sub">하비탄 AI는 전략을 실제 업무 도구로 만들고, 고객의 팀이 직접 운영하도록 교육합니다.</p>
+      <div class="cta-row pe">
+        <a class="btn w glow" href="#">AI 전환 상담하기</a>
+        <svg class="cursor3d" id="cursor" viewBox="0 0 80 80" aria-hidden="true">
+          <defs>
+            <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#d9dbe0"/><stop offset="1" stop-color="#8b8f98"/></linearGradient>
+            <filter id="cs"><feDropShadow dx="2" dy="5" stdDeviation="4" flood-opacity=".5"/></filter>
+          </defs>
+          <path d="M14 8 L66 34 L42 40 L32 66 Z" fill="url(#cg)" stroke="#fff" stroke-width="2" stroke-linejoin="round" filter="url(#cs)"/>
+          <path d="M14 8 L42 40 L32 66 Z" fill="#000" opacity=".12"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 2. radar words -->
+    <div class="layer" id="L-words">
+      <div class="words"><span>모든</span><span>팀에</span><span>AI</span><span>슈퍼유저를</span><i class="dot"></i></div>
+    </div>
+
+    <!-- 3. warp + ask -->
+    <div class="layer" id="L-warp" style="justify-content:flex-start;padding-top:22vh">
+      <h2 class="h2">반복하던 업무를<br>AI와 함께 <span class="grad">다시 설계합니다.</span></h2>
+      <div class="ask"><div class="av"></div><div class="tx" id="typed"></div><div class="send" id="send">↑</div></div>
+    </div>
+
+    <!-- 4. modes intro -->
+    <div class="layer" id="L-modes">
+      <div class="modes">
+        <h2 class="h2">하나의 파트너.<br>네 가지 <span class="grad">단계.</span></h2>
+        <p>전략을 세우고, 사람을 키우고, 도구를 만들고, 운영을 넘깁니다. 우리 조직에 필요한 단계부터 시작합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== STORYBOARD =============== -->
+<main class="doc" id="plan">
+  <div class="eyebrow">Reference capture → HOBBYTAN rebuild</div>
+  <h2>jimo.ai/product/ai 캡처 분석과<br>하비탄 리뉴얼 구성안</h2>
+  <p class="lead">1440×900 뷰포트에서 레퍼런스를 0px → 21,890px까지 스크롤하며 장면마다 프레임을 캡처했습니다. 아래 왼쪽은 레퍼런스 실제 프레임, 오른쪽은 같은 모션을 하비탄 내용으로 옮길 계획입니다. 맨 위 프로토타입은 1~4번 장면을 실제 코드로 구현한 것입니다.</p>
+
+  <div class="facts">
+    <div><b>Dark · DM Sans 300</b><span>배경 #000, 헤드라인 86px / 자간 -0.035em. 한글은 Pretendard Light로 매칭</span></div>
+    <div><b>Sticky 장면 8개</b><span>400vh 핀 섹션, 스크롤 진행률로 모든 모션 구동 (시간 기반 아님)</span></div>
+    <div><b>Canvas 18개</b><span>별·행성·궤도·웜홀 그리드·점 필드·은하 파티클 모두 코드로 그림 → 이미지 불필요</span></div>
+    <div><b>가이드 스타</b><span>화면 고정 캔버스의 빛나는 점이 섹션을 넘나들며 따라다니는 연출이 페이지 전체를 관통</span></div>
+  </div>
+
+  <div id="sections"></div>
+
+  <div class="decide">
+    <h3>승인 전에 확인할 것</h3>
+    <ol>
+      <li><b>Jimo 자산은 복사하지 않습니다.</b> 우주 장갑 이미지, 로고, 문구는 쓰지 않고 레이아웃과 모션만 재현합니다. 장갑은 <b>3D AI 커서 오브젝트</b>로 바꿔 <code>image-2.5-sunburst</code>로 생성합니다 (위 프로토타입의 SVG 커서는 자리표시용).</li>
+      <li><b>생성할 이미지 (총 3장):</b> 히어로 3D 커서(투명 PNG), 최종 CTA용 같은 커서 다른 포즈, OG 공유 이미지. 행성·별·그리드는 전부 캔버스 코드라 이미지가 필요 없습니다.</li>
+      <li><b>후기 문구가 필요합니다.</b> 13번 인용 섹션과 12번 사례 카드에 실제 수료생/고객 후기와 수치를 넣어야 합니다. 받기 전까지는 하비탄 자체 문장("운영의 주도권은 고객의 팀에.")으로 채우고, 지어낸 후기는 넣지 않습니다.</li>
+      <li><b>기술 구성:</b> 정적 단일 페이지(HTML + CSS + 바닐라 JS, 외부 라이브러리 없이 자체 스크롤 엔진). 기존 /shop, /contact 링크는 그대로 연결합니다.</li>
+      <li><b>반응형 · 접근성:</b> 모바일에서는 핀 길이를 줄이고, <code>prefers-reduced-motion</code>이면 정적 레이아웃으로 바꿉니다.</li>
+    </ol>
+  </div>
+</main>
+
+<script>
+/* ================= storyboard data ================= */
+const S = [
+ ["01-hero","Hero · 행성과 궤도","기업의 AI 전환을 설계하고,<br>현장에서 <u>완성합니다</u>.","하비탄 AI는 전략을 실제 업무 도구로 만들고, 고객의 팀이 직접 운영하도록 교육합니다.",
+  "별 반짝임, 오른쪽 행성 가장자리의 빛, 점이 박힌 타원 궤도가 천천히 회전. 마지막 단어는 회색 그라데이션과 빛나는 밑줄. CTA 옆 3D 오브젝트가 둥실 떠 있음","CTA: AI 전환 상담하기 · 3D 커서 <span class=chip>이미지 생성</span>"],
+ ["02-star","전환 · 오브젝트 → 별","","",
+  "스크롤하면 헤드라인이 위로 빠지고, 3D 오브젝트가 화면 중앙으로 날아가 작아지며 빛나는 별로 바뀜. 행성은 위로 밀려나며 사라짐","프로토타입에 구현됨"],
+ ["03-radar","레이더 라인","","",
+  "별을 중심으로 세로선 → 점선 가로축 → 동심원 3개가 그려지듯 늘어남(stroke-dashoffset 방식), 사분원 호가 회전","프로토타입에 구현됨"],
+ ["04-words","단어 리빌","모든 팀에 AI 슈퍼유저를.","원문 \"Every user gets a guide\" → 하비탄의 핵심 메시지로 교체",
+  "단어마다 blur(12px)·투명 → 선명하게 순서대로 나타남, 끝에 빛나는 점. 이어서 대각선 4개가 추가되며 단어가 흐려짐","프로토타입에 구현됨"],
+ ["05-warp","웜홀 그리드 + 입력창 타이핑","반복하던 업무를<br>AI와 함께 <u>다시 설계합니다.</u>","입력창에 \"견적서 가격 비교를 AI로 자동화할 수 있을까요?\"가 스크롤에 맞춰 타이핑 → 전송 버튼 점등",
+  "3D 원근 투영한 깔때기 그리드(링 + 방사선)가 나타나고, 점들이 깔때기로 미끄러져 들어감. 섹션 끝에서 그리드가 위로 빠짐","프로토타입에 구현됨"],
+ ["06-modes","One agent. Three modes → 4단계 서비스","하나의 파트너.<br>네 가지 <u>단계.</u>","01 AI 전환 전략 · 02 슈퍼AI워크샵 · 03 업무 도구 구현 · 04 운영 내재화",
+  "왼쪽에 앱 목업 카드 4장이 차례로 스크롤되고, 오른쪽 AI 패널은 sticky로 고정. 카드가 바뀔 때마다 탭(01/02/03/04)이 전환되며 질문 → Thinking 단계 체크 → 답변이 순서대로 나타남. 커서 아이콘이 화면 위를 이동","카드 내용: 과제 우선순위표 / 워크샵 커리큘럼 / 견적 비교 도구 / 권한·운영 문서"],
+ ["07-interface","Interface Context™ → 업무 적용 예시","AI가 업무 화면을 읽고,<br>흩어진 자료를 <u>한 화면으로.</u>","문구 3단 전환: \"AI가 업무를 읽습니다\" → \"흩어진 자료를 한 화면으로\" → \"판단은 팀의 기준으로\"",
+  "400vh 핀. 대시보드가 rotateX로 기울어진 채 빛나는 격자 위에 떠 있고, 빛줄기가 화면을 훑으며 요소마다 라벨(nav.reports 같은 태그)이 붙음. 마지막에 카탈로그 팝업이 열리고 토글이 켜짐. 헤드라인 단어는 블러로 교체","기존 물류·구매·재고·판매·마케팅·분석·예측 7개 탭을 카탈로그 팝업에 연결"],
+ ["08-trusted","신뢰 스트립","수료생 소속 기업 22곳","에코아이티 · SICT · 바이츠믹스 · BIG3 · 엔클루 … 로고 마퀴 + 누적 수료 80명+ · 수료율 80% · 만족도 90%+",
+  "3칸 카드. 왼쪽 로고가 무한 마퀴(좌우 페이드 마스크), 가이드 스타가 카드 위로 지나감","기존 graduate-logos 이미지 재사용 (흰색 버전으로 변환)"],
+ ["09-bento","Train it. Design it. → 슈퍼AI워크샵 벤토","배우고. 만들고.<br>직접 <u>운영합니다.</u>","팀장과 리더 · 현업 실무자 · 도구 제작 · 결과 검증 · 동료 확산 · 사내 기준",
+  "벤토 그리드 6~8칸. 칸마다 작은 루프 애니메이션(녹화 REC 타이머, 커서 클릭, 토글, 막대 차트 상승, 채팅 검색 결과 필터링). 뷰포트 진입 시 시작","각 칸 하단에 \"굵은 제목. 회색 설명\" 형식"],
+ ["10-sdk","Call from anywhere → 운영 내재화","팀이 직접 고치고,<br>어디서든 <u>씁니다.</u>","Google Sheets · Slack · 사내 시스템: 만든 도구를 팀이 쓰는 곳에 연결합니다.",
+  "아래쪽 점 파동(dot wave) 캔버스가 물결침. 코드 에디터에 한 줄씩 타이핑되고, 오른쪽에 창 3개가 카드 스택처럼 앞뒤로 교체됨","코드 예시: 견적 비교 자동화 스크립트"],
+ ["11-tickets","\"How do I…?\" tickets → 반복 업무 카운트다운","\"이거 어떻게 해요?\"<br>반복 질문, <u>0으로.</u>","말풍선: \"견적서 비교 언제 끝나요?\" \"재고 엑셀 최신본 어디예요?\" \"이번 달 매출 집계 기준이 뭐죠?\"…",
+  "핀 섹션. 3D 점 필드 위에 사람 아바타 + 말풍선이 떠 있고, 스크롤하면 하나씩 \"✓ AI로 해결\" 배지를 받고 사라지며 숫자가 40 → 0으로 줄어듦. 이후 통계 3개 등장","통계: 80명+ 누적 수료 · 80% 수료율 · 90%+ 만족도"],
+ ["12-stories","사례 카드 캐러셀","현장에서<br><u>증명했습니다.</u>","수료생 소속 기업 카드 (회사 로고 + 핵심 수치 + 인물)",
+  "가로 스크롤 카드. 카운트업 숫자, 북마크 모양 상단. 호버 시 살짝 떠오름","실제 수치·인물 사진 필요 <span class=chip>자료 요청</span>"],
+ ["13-quote","인용 + 은하 파티클","\"운영의 주도권은<br>고객의 팀에.\"","업무가 바뀌면 무엇을 고칠지 판단하고 직접 개선할 수 있도록 교육합니다.",
+  "타원 은하 파티클이 천천히 회전, 중앙 성운 글로우. 문장 앞부분은 회색, 뒷부분은 흰색","실제 후기를 받으면 교체"],
+ ["14-pricing","Pricing 슬라이더 → 진행 방식","내부 운영 비율<br><u>90%</u>까지","01 진단 → 02 교육 → 03 구현 → 04 이관",
+  "별밭 배경에 큰 숫자. 슬라이더를 움직이면(또는 스크롤하면) 단계가 바뀌며 숫자가 10% → 40% → 70% → 90%로 롤링, 아래 설명 교체","\"장기적으로 개발과 관리의 90% 이상을 내부에서\" 문장에서 가져온 수치"],
+ ["15-faq","FAQ · 채팅 말풍선","시작하기 전에<br>궁금한 <u>점.</u>","개발 경험이 없어도 참여할 수 있나요? 외 3개 (기존 답변 그대로)",
+  "왼쪽 제목 sticky, 오른쪽은 질문(오른쪽 말풍선) → 답변(왼쪽 말풍선)이 스크롤에 따라 채팅처럼 하나씩 나타남","CTA: AI 전환 상담하기"],
+ ["16-cta","최종 CTA + 푸터","지금 바꾸고 싶은<br><u>업무를 들려주세요.</u>","우리 조직의 상황에 맞는 첫 실행 계획을 제안합니다.",
+  "3D 오브젝트가 다시 등장, 아래쪽 큰 선화 실루엣. 푸터에 사업자 정보·링크 그대로","3D 커서 두 번째 포즈 <span class=chip>이미지 생성</span>"],
+];
+document.getElementById('sections').innerHTML = S.map((s,i)=>`
+ <article class="sec">
+  <figure><img src="ref/${s[0]}.jpg" alt="레퍼런스 프레임 ${i+1}" loading="lazy"><figcaption>레퍼런스 프레임</figcaption></figure>
+  <div>
+   <div class="n">${String(i+1).padStart(2,'0')}</div>
+   <h3>${s[1]}</h3>
+   ${s[2]?`<div class="copy">${s[2].replace(/<u>(.*?)<\/u>/g,'<span class="grad">$1</span>')}${s[3]?`<small>${s[3]}</small>`:''}</div>`:''}
+   <dl><dt>모션</dt><dd>${s[4]}</dd><dt>메모</dt><dd>${s[5]}</dd></dl>
+  </div>
+ </article>`).join('');
+
+/* ================= prototype engine ================= */
+const cv=document.getElementById('cv'), ctx=cv.getContext('2d');
+const scene=document.getElementById('scene');
+const $=id=>document.getElementById(id);
+const L={hero:$('L-hero'),words:$('L-words'),warp:$('L-warp'),modes:$('L-modes')};
+const words=[...document.querySelectorAll('.words span, .words .dot')];
+const typed=$('typed'), send=$('send'), cursorEl=$('cursor'), prog=$('prog');
+const QUESTION='견적서 가격 비교를 AI로 자동화할 수 있을까요?';
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let W=0,H=0,DPR=1,stars=[];
+function resize(){
+  DPR=Math.min(devicePixelRatio||1,2); W=cv.clientWidth; H=cv.clientHeight;
+  cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+  stars=Array.from({length:Math.round(W*H/5200)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.1+.2,ph:Math.random()*6.28,sp:.5+Math.random()*1.5}));
+}
+addEventListener('resize',resize); resize();
+
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const seg=(p,a,b)=>clamp((p-a)/(b-a));
+const eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const eo=t=>1-Math.pow(1-t,3);
+const lerp=(a,b,t)=>a+(b-a)*t;
+
+let target=0, p=0;
+function readScroll(){
+  const r=scene.getBoundingClientRect(), span=r.height-innerHeight;
+  target=span>0?clamp(-r.top/span):0;
+  const total=document.documentElement.scrollHeight-innerHeight;
+  prog.style.width=(scrollY/total*100)+'%';
+}
+addEventListener('scroll',readScroll,{passive:true}); readScroll();
+
+function glow(x,y,r,a){
+  const g=ctx.createRadialGradient(x,y,0,x,y,r);
+  g.addColorStop(0,`rgba(255,255,255,${a})`); g.addColorStop(.25,`rgba(220,230,255,${a*.35})`); g.addColorStop(1,'rgba(200,215,255,0)');
+  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fill();
+  ctx.fillStyle=`rgba(255,255,255,${a})`; ctx.beginPath(); ctx.arc(x,y,Math.max(1.6,r*.08),0,7); ctx.fill();
+}
+
+function drawPlanet(a,shift){
+  if(a<=0) return;
+  const R=Math.max(W,H)*.52, cx=W*.47, cy=H*.62-shift;
+  ctx.save(); ctx.globalAlpha=a;
+  // body
+  const body=ctx.createRadialGradient(cx-R*.2,cy,R*.2,cx,cy,R);
+  body.addColorStop(0,'#030405'); body.addColorStop(.86,'#07090e'); body.addColorStop(.97,'#1a2130'); body.addColorStop(1,'#3a4560');
+  ctx.fillStyle=body; ctx.beginPath(); ctx.arc(cx,cy,R,0,7); ctx.fill();
+  // lit limb (right side)
+  const lg=ctx.createLinearGradient(cx-R,0,cx+R,0);
+  lg.addColorStop(0,'rgba(200,215,255,0)'); lg.addColorStop(.55,'rgba(200,215,255,0)'); lg.addColorStop(.9,'rgba(210,222,255,.55)'); lg.addColorStop(1,'rgba(240,245,255,.95)');
+  ctx.strokeStyle=lg; ctx.lineWidth=2.5; ctx.shadowColor='rgba(190,205,255,.9)'; ctx.shadowBlur=40;
+  ctx.beginPath(); ctx.arc(cx,cy,R,-1.45,1.45); ctx.stroke();
+  ctx.lineWidth=14; ctx.globalAlpha=a*.25; ctx.beginPath(); ctx.arc(cx,cy,R-8,-1.2,1.2); ctx.stroke();
+  ctx.restore();
+}
+
+function drawOrbit(a,t,shift){
+  if(a<=0) return;
+  const cx=W*.5, cy=H*.63-shift, rx=Math.min(W*.17,260), ry=H*.33, rot=-.35;
+  ctx.save(); ctx.translate(cx,cy); ctx.rotate(rot); ctx.globalAlpha=a;
+  ctx.strokeStyle='rgba(255,255,255,.22)'; ctx.lineWidth=1;
+  const start=-2.3+Math.sin(t*.1)*.05, end=start+4.6;
+  ctx.beginPath(); ctx.ellipse(0,0,rx,ry,0,start,end); ctx.stroke();
+  for(let i=0;i<9;i++){
+    const th=start+((i/9)+t*.012)%1*4.6;
+    const x=Math.cos(th)*rx, y=Math.sin(th)*ry;
+    ctx.fillStyle='rgba(255,255,255,.7)'; ctx.shadowColor='#fff'; ctx.shadowBlur=8;
+    ctx.beginPath(); ctx.arc(x,y,1.6,0,7); ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawRadar(a,b,cx,cy){
+  if(a<=0) return;
+  ctx.save(); ctx.lineWidth=1;
+  const fade=1-seg(p,.43,.5);
+  ctx.globalAlpha=fade;
+  // vertical line
+  const vl=eo(seg(a,0,.4))*H*.6;
+  ctx.strokeStyle='rgba(255,255,255,.28)';
+  ctx.beginPath(); ctx.moveTo(cx,cy-vl); ctx.lineTo(cx,cy+vl); ctx.stroke();
+  // dashed horizontal
+  const hl=eo(seg(a,.15,.55))*W*.55;
+  ctx.setLineDash([4,6]); ctx.strokeStyle='rgba(255,255,255,.22)';
+  ctx.beginPath(); ctx.moveTo(cx-hl,cy); ctx.lineTo(cx+hl,cy); ctx.stroke(); ctx.setLineDash([]);
+  // circles drawn progressively
+  const radii=[Math.min(W,H)*.14,Math.min(W,H)*.35,Math.min(W,H)*.55];
+  radii.forEach((r,i)=>{
+    const k=eo(seg(a,.25+i*.15,.7+i*.1));
+    if(k<=0) return;
+    ctx.strokeStyle=`rgba(255,255,255,${.2-i*.04})`;
+    ctx.beginPath(); ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+k*Math.PI*2); ctx.stroke();
+  });
+  // rotating quarter arc
+  const qa=seg(a,.3,.8)*(1-b);
+  if(qa>0){ ctx.strokeStyle=`rgba(255,255,255,${.35*qa})`; ctx.beginPath(); ctx.arc(cx,cy,radii[0]*.7,-Math.PI/2,-Math.PI/2+Math.PI*qa); ctx.stroke(); }
+  // diagonals
+  if(b>0){
+    ctx.setLineDash([3,7]); ctx.strokeStyle='rgba(255,255,255,.18)';
+    const d=eo(b)*Math.max(W,H)*.6;
+    [[1,1],[1,-1],[-1,1],[-1,-1]].forEach(([sx,sy])=>{ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+sx*d*.72,cy+sy*d*.72);ctx.stroke();});
+    ctx.setLineDash([]);
+  }
+  ctx.restore();
+}
+
+function drawWarp(a,lift,t){
+  if(a<=0) return;
+  const cx=W/2, cy=H*.66-lift, f=Math.min(W,H*1.6)*.62, pitch=.42, dist=7.2;
+  const cp=Math.cos(pitch), sp=Math.sin(pitch);
+  const depth=r=>-2.2/(r*.85+.28)+.25;
+  const proj=(x,y,z)=>{const y2=y*cp-z*sp, z2=y*sp+z*cp+dist; if(z2<.4) return null; return [cx+x*f/z2, cy-y2*f/z2, z2];};
+  ctx.save(); ctx.lineWidth=1;
+  const rings=[]; for(let i=0;i<18;i++) rings.push(.34*Math.pow(1.24,i));
+  // rings
+  rings.forEach(r=>{
+    ctx.beginPath(); let first=true;
+    for(let k=0;k<=96;k++){
+      const th=k/96*Math.PI*2, q=proj(Math.cos(th)*r,depth(r),Math.sin(th)*r);
+      if(!q){first=true;continue;} first?ctx.moveTo(q[0],q[1]):ctx.lineTo(q[0],q[1]); first=false;
+    }
+    ctx.strokeStyle=`rgba(255,255,255,${a*clamp(.32-r*.012,.06,.3)})`; ctx.stroke();
+  });
+  // spokes
+  for(let s=0;s<32;s++){
+    const th=s/32*Math.PI*2; ctx.beginPath(); let first=true;
+    for(let i=0;i<rings.length;i++){
+      const r=rings[i], q=proj(Math.cos(th)*r,depth(r),Math.sin(th)*r);
+      if(!q){first=true;continue;} first?ctx.moveTo(q[0],q[1]):ctx.lineTo(q[0],q[1]); first=false;
+    }
+    ctx.strokeStyle=`rgba(255,255,255,${a*.14})`; ctx.stroke();
+  }
+  // particles sliding into the well
+  for(let i=0;i<4;i++){
+    const ph=((t*.08+i*.27)%1), r=lerp(rings[rings.length-3],rings[1],eio(ph)), th=i*1.7+.6;
+    const q=proj(Math.cos(th)*r,depth(r),Math.sin(th)*r);
+    if(q) glow(q[0],q[1],10,a*(1-ph)*.9);
+  }
+  ctx.restore();
+}
+
+function frame(now){
+  const t=now/1000;
+  if(cv.clientWidth!==W||cv.clientHeight!==H) resize();
+  if(!W||!H){ requestAnimationFrame(frame); return; }
+  p += (target-p)*(reduce?1:.09);   // smoothed scroll (lenis-like)
+  if(!Number.isFinite(p)) p=target;
+  ctx.fillStyle='#000'; ctx.fillRect(0,0,W,H);
+
+  /* --- timeline (0..1 over the 640vh scene) --- */
+  const heroOut = eio(seg(p,.03,.16));          // headline + planet leave
+  const flight  = eio(seg(p,.06,.18));          // cursor → star
+  const radarA  = seg(p,.17,.3);
+  const diagB   = seg(p,.33,.4);
+  const warpIn  = eo(seg(p,.42,.52));
+  const typing  = seg(p,.55,.68);
+  const warpLift= eio(seg(p,.76,.92));
+  const modesIn = eo(seg(p,.84,.96));
+
+  // stars
+  const starA=1-seg(p,.18,.3)*.75;
+  for(const s of stars){
+    const tw=.45+.55*Math.sin(t*s.sp+s.ph);
+    ctx.fillStyle=`rgba(255,255,255,${starA*tw*.8})`;
+    ctx.fillRect(s.x,(s.y-heroOut*40+H)%H,s.r,s.r);
+  }
+  drawPlanet(1-seg(p,.08,.2), heroOut*H*.45);
+  drawOrbit(1-seg(p,.06,.15), t, heroOut*H*.3);
+
+  // star position: from cursor → center, later floats up with the warp
+  const cr=cursorEl.getBoundingClientRect();
+  const sx0=cr.left+cr.width*.3, sy0=cr.top+cr.height*.3;
+  let sx=lerp(sx0,W/2,flight), sy=lerp(sy0,H/2,flight);
+  sy=lerp(sy,H*.47,eo(seg(p,.4,.5)));
+  sx=lerp(sx,W*.5+Math.sin(t*.6)*6,warpLift); sy=lerp(sy,H*.42,warpLift);
+  drawRadar(radarA,diagB,W/2,H/2);
+  drawWarp(warpIn*(1-eo(warpLift)),warpLift*H*.35,t);
+  const hideForWords=seg(p,.235,.255)*(1-seg(p,.39,.42));   // star "becomes" the trailing dot
+  if(flight>0) glow(sx,sy,lerp(6,34,flight)+Math.sin(t*2)*2, clamp(flight*1.4)*(1-hideForWords)*(.85+.15*Math.sin(t*3)));
+
+  /* --- DOM layers --- */
+  L.hero.style.opacity=1-heroOut;
+  L.hero.style.transform=`translateY(${-heroOut*H*.35}px)`;
+  L.hero.style.filter=`blur(${heroOut*6}px)`;
+  cursorEl.style.opacity=1-seg(p,.12,.17);
+  cursorEl.style.transform=`translate(${(W/2-sx0)*flight}px,${(H/2-sy0+heroOut*H*.35)*flight}px) scale(${1-flight*.8}) rotate(${flight*40}deg)`;
+  cursorEl.style.animationPlayState=flight>0?'paused':'running';
+
+  const wordsVisible=p>.24&&p<.44;
+  L.words.style.opacity=wordsVisible?1:0;
+  words.forEach((w,i)=>{
+    const k=eo(seg(p,.25+i*.018,.29+i*.018)), out=seg(p,.36,.42);
+    w.style.opacity=k*(1-out);
+    w.style.filter=`blur(${(1-k)*12+out*8}px)`;
+    w.style.transform=`translateY(${(1-k)*14}px)`;
+  });
+
+  L.warp.style.opacity=warpIn*(1-seg(p,.78,.86));
+  L.warp.style.transform=`translateY(${(1-warpIn)*30 - warpLift*H*.4}px)`;
+  L.warp.style.filter=`blur(${(1-warpIn)*8}px)`;
+  const n=Math.round(typing*QUESTION.length);
+  if(typed.textContent.length!==n) typed.textContent=QUESTION.slice(0,n);
+  send.classList.toggle('on',typing>=1);
+
+  L.modes.style.opacity=modesIn;
+  L.modes.style.transform=`translateY(${(1-modesIn)*60}px)`;
+
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
